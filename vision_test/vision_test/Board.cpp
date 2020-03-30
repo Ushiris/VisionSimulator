@@ -33,49 +33,63 @@ Board * Board::getEnemy()
 	return enemy;
 }
 
-vector<int> Board::getDeck()
+vector<int>& Board::getDeck()
 {
 	return deck;
 }
 
-vector<int> Board::getDeckList()
+vector<int>& Board::getDeckList()
 {
 	return deckList;
 }
 
-vector<int> Board::getSide()
+vector<int>& Board::getSide()
 {
 	return side;
 }
 
-vector<int> Board::getHands()
+vector<int>& Board::getHands()
 {
 	return hands;
 }
 
-vector<int> Board::getNode()
+vector<int>& Board::getNode()
 {
 	return node;
 }
 
-vector<int> Board::getNether()
+vector<int>& Board::getNether()
 {
 	return nether;
 }
 
-vector<int> Board::getCast()
+vector<int>& Board::getCast()
 {
 	return cast;
 }
 
-vector<int> Board::getField()
+vector<int>& Board::getField()
 {
 	return field;
 }
 
+void * Board::getCardData(int idx)
+{
+	return _cardData[idx];
+}
+
+bool Board::checkPlayable(void *playCard)
+{
+	Card *card = (Card*)playCard;
+
+	if(node.size())
+
+	return true;
+}
+
 void Board::setDeckList(vector<int> list)
 {
-	for (int i = 0;i < list.size();++i)
+	for (size_t i = 0;i < list.size();++i)
 	{
 		deckList[i] = list[i];
 	}
@@ -162,7 +176,7 @@ void Board::playCard(vector<int> &cards, int idx)
 	cast.push_back(cards[idx]);
 	cards.erase(cards.begin() + idx);
 
-	//
+	
 }
 
 void Board::playReqest(vector<int> &cards, int idx)

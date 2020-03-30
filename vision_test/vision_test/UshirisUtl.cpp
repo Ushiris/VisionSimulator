@@ -76,7 +76,7 @@ void print_center(string main_string, char * window_mode, int print_sleep_time, 
 	system("cls");
 
 	//goto start line
-	for (int i = 0; i < 12 - strings.size() / 2; i++)
+	for (unsigned int i = 0; i < 12 - strings.size() / 2; i++)
 	{
 		_putch('\n');
 	}
@@ -84,16 +84,16 @@ void print_center(string main_string, char * window_mode, int print_sleep_time, 
 	clear_buff();
 
 	//main logic
-	for (int j = 0; j <= strings.size(); j++)
+	for (size_t j = 0; j <= strings.size(); j++)
 	{
 		//goto start position
-		for (int i = 0; i < window - strings[j].size() / 2; i++)
+		for (unsigned int i = 0; i < window - strings[j].size() / 2; i++)
 		{
 			_putch(' ');
 		}
 
 		//print string
-		for (int i = 0; i < strings[j].size(); i++)
+		for (size_t i = 0; i < strings[j].size(); i++)
 		{
 			//skip animation
 			if (_kbhit()){

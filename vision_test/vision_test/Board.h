@@ -11,6 +11,7 @@ private:
 	static const int SIDE_LIMIT = 10;
 
 	Board *enemy;
+	vector<void*> _cardData;
 
 	vector<int> deck;
 	vector<int> deckList;
@@ -29,14 +30,18 @@ public:
 
 	/* getter */
 	Board* getEnemy();
-	vector<int> getDeck();
-	vector<int> getDeckList();
-	vector<int> getSide();
-	vector<int> getHands();
-	vector<int> getNode();
-	vector<int> getNether();
-	vector<int> getCast();
-	vector<int> getField();
+	vector<int>& getDeck();
+	vector<int>& getDeckList();
+	vector<int>& getSide();
+	vector<int>& getHands();
+	vector<int>& getNode();
+	vector<int>& getNether();
+	vector<int>& getCast();
+	vector<int>& getField();
+
+	void* getCardData(int idx);
+	bool checkPlayable(void* playCard);
+	bool checkPlayable(int hand_idx);
 
 	/* setter */
 	void setDeckList(vector<int> list);
@@ -49,7 +54,7 @@ public:
 	void playReqest(vector<int> &cards, int idx);		//正式にカードのプレイを宣言する
 	void addEnemy(Board *newEnemy);						//対戦相手の盤面を規定する
 	void sendNode(vector<int> &cards, int idx = 0);		//ノードにカードを移動させる
-	void discard(vector<int> &cards, int idx);
+	void discard(vector<int> &cards, int idx);			//カードを破棄する
 	
 	
 	bool inHand(vector<int> targets);					//手札にtarget内のカードが存在するか調べる

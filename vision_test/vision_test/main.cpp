@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <conio.h>
 #include <windows.h>
+#include <algorithm>
 
 #include "UshirisUtl.h"
 #include "Board.h"
@@ -35,29 +36,33 @@ int main(void)
 {
 	Init();
 	Board player;
-	vector<vector<int>> targets(2, vector<int>(3));
+	vector<vector<int>> targets(4, vector<int>(3,999));
 	targets[0][0] = 0;
 	targets[0][1] = 1;
 	targets[0][2] = 2;
 	targets[1][0] = 3;
-	targets[1][1] = 4;
-	targets[1][2] = 5;
+	targets[2][0] = 4;
+	targets[3][0] = 5;
 
 	vector<int> deckList;
 	makeDeckList(deckList);
 	player.setDeckList(deckList);
 
-	unsigned long long int test_time = 0;
-	unsigned long long int success = 0;
+	unsigned int test_time = 0;
+	unsigned int success = 0;
+	long double result_end = 0;
 
 	clear_buff();
 
-	while (test_time <= MAXULONGLONG - 1001)
+	while (test_time <= MAXUINT - 1001)
 	{
 		for (int i = 0;i < 1000;++i)
 		{
 			player.draw(7);
-			if (player.inHand(targets[0])) success++;
+			if (player.inHand(targets[0]))
+			{
+				success++;
+			}
 
 			player.resetDeck();
 			test_time++;
@@ -67,12 +72,16 @@ int main(void)
 		system("cls");
 		cout << setprecision(5) << result << '%' << "\ntime:" << test_time << endl;
 
-		if (_kbhit())break;
+		if (_kbhit())
+		{
+			result_end = result;
+			break;
+		}
 	}
 
 	clear_buff();
-	cout << "[Q]:end" << endl;
-	command_set("q", 1);
+	cout << "[E]:exit" << endl;
+	command_set("e", 1);
 
 	return 0;
 }
