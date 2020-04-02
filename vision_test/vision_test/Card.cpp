@@ -1,5 +1,6 @@
 #include "Card.h"
 #include "Board.h"
+#include "UshirisUtl.h"
 
 using namespace std;
 
@@ -35,16 +36,26 @@ void Card::InitDataBase()
 	}
 
 	//‚±‚±‚ÉŒø‰Êˆ—‚ğ‘‚«‚Ü‚·B’n–‚©H
+#pragma region CARD_EFFECT_DEFINE_AREA
+
 	EFFECT(720) {
 		Board *you = (Board*)board;
 		you->sendNode(you->getCast(), you->getCast().size()-1);
+
 		return true;
 	};
+
 	EFFECT(12030) {
 		Board* you = (Board*)board;
-		
+		you->sarch(12030);
+		shuffle(you->getDeck());
+		you->sendNode(you->getDeck(), 0);
+		you->discard(you->getCast(), you->getCast().size() - 1);
+
 		return true;
 	};
+
+#pragma endregion
 }
 
 int Card::getId()
