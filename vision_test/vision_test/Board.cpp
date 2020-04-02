@@ -8,6 +8,7 @@ Board::Board()
 {
 	deck=vector<int>();
 	deckList=vector<int>();
+	_cardData = vector<void*>(DECK_LIMIT + SIDE_LIMIT);
 	side=vector<int>();
 	hands=vector<int>();
 	node=vector<int>();
@@ -20,6 +21,33 @@ Board::Board()
 		deck[i] = i;
 	}
 	deckList = vector<int>(DECK_LIMIT+SIDE_LIMIT, 0);
+
+	shuffle(deck);
+}
+
+Board::Board(vector<int> &newDeckList)
+{
+
+	deck = vector<int>();
+	deckList = newDeckList;
+	_cardData = vector<void*>(DECK_LIMIT + SIDE_LIMIT);
+	for (int i=0;i<newDeckList.size();i++)
+	{
+		_cardData[i] = new Card(deckList[i]);
+	}
+	
+	side = vector<int>();
+	hands = vector<int>();
+	node = vector<int>();
+	nether = vector<int>();
+	cast = vector<int>();
+	field = vector<int>();
+
+	deck = vector<int>(DECK_LIMIT);
+	for (int i = 0; i < DECK_LIMIT; ++i) {
+		deck[i] = i;
+	}
+	deckList = vector<int>(DECK_LIMIT + SIDE_LIMIT, 0);
 
 	shuffle(deck);
 }

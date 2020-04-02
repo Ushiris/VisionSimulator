@@ -26,6 +26,7 @@ private:
 
 public:
 	Board();
+	Board(vector<int> &newDeckList);
 	~Board();
 
 	/* getter */
