@@ -34,7 +34,9 @@ enum class Race
 	tennin,
 	dragon,
 	hermit,
-	dwarf
+	dwarf,
+	none,
+	solidarity_void
 };
 
 enum class Range
@@ -43,7 +45,8 @@ enum class Range
 	all,
 	player,
 	malti,
-	other
+	other,
+	none
 };
 
 enum class Period
@@ -52,38 +55,39 @@ enum class Period
 	continuation,
 	equipment,
 	enchant,
-	environment
+	environment,
+	none
 };
 
 class Card
 {
 private:
 	//card text
-	int id;
-	CardType type;
-	std::vector<std::string> name;
-	int node;
-	int cost;
-	std::string user;
-	std::vector<Race> race;
-	std::vector<Race> solidarity;
-	int graze;
-	Range renge;
-	Period period;
-	int attack;
-	int life;
-	std::string text;
+	int id = 0;
+	CardType type = CardType::command;
+	std::vector<std::string> name = { "void" };
+	int node = 0;
+	int cost = 0;
+	std::string user = "none";
+	std::vector<Race> race = { Race::none };
+	std::vector<Race> solidarity = { Race::solidarity_void };
+	int graze = 0;
+	Range range = Range::none;
+	Period period = Period::none;
+	int attack = 0;
+	int life = 0;
+	std::string text = "";
 
 	//in game effects
 	int attack_enchant = 0;
 	int life_enchant = 0;
 	int node_buff = 0;
 	int cost_buff = 0;
-	std::function<bool(void*)> effect;
-	std::vector<std::function<bool(void*)>> actions;
-	bool isCharactor;
-	bool isEquipment;
-	bool isReverse;
+	std::function<bool(void*)> effect = std::function<bool(void*)>([](void*) { return false; });
+	std::vector<std::function<bool(void*)>> actions = std::vector<std::function<bool(void*)>>();
+	bool isCharactor = false;
+	bool isEquipment = false;
+	bool isReverse = false;
 
 	std::vector<Card> setCards;
 
@@ -120,7 +124,7 @@ public:
 	static void InitDataBase();
 
 	bool isPlayable();
-	bool (*play)(void*);
+	std::function<bool(void*)> play = std::function<bool(void*)>([](void*) {return true; });
 };
 
 std::function<bool(void*)> getPlayEffect(int id);

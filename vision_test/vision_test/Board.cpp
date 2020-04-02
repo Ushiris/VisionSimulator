@@ -144,11 +144,11 @@ void Board::draw(int amount)
 	}
 }
 
-bool Board::inHand(vector<int> targets)
+bool Board::inHand(vector<int> deck_idx)
 {
 	for (auto &card : hands)
 	{
-		for (auto &target : targets)
+		for (auto &target : deck_idx)
 		{
 			if (card == target)return true;
 		}
@@ -157,16 +157,36 @@ bool Board::inHand(vector<int> targets)
 	return false;
 }
 
-bool Board::inDeck(vector<int> targets)
+bool Board::inHand(int id)
+{
+	for (size_t i = 0; i < hands.size(); i++)
+	{
+		Card* card = (Card*)getCardData(deckList[hands[i]]);
+		if (card->getId() == id)return true;
+	}
+	return false;
+}
+
+bool Board::inDeck(vector<int> deck_idx)
 {
 	for (auto &card : deck)
 	{
-		for (auto &target : targets)
+		for (auto &idx : deck_idx)
 		{
-			if (card == target)return true;
+			if (card == idx)return true;
 		}
 	}
 
+	return false;
+}
+
+bool Board::inDeck(int id)
+{
+	for (size_t i = 0; i < deck.size(); i++)
+	{
+		Card* card = (Card*)getCardData(deckList[deck[i]]);
+		if (card->getId() == id)return true;
+	}
 	return false;
 }
 
@@ -206,6 +226,33 @@ void Board::discard(vector<int>& cards, int idx)
 {
 	nether.push_back(cards[idx]);
 	cards.erase(cards.begin() + idx);
+}
+
+bool Board::sarch(int id)
+{
+	vector<int> target;
+	for (size_t i = 0; i < deckList.size(); i++)
+	{
+		if (deckList[i] == id)
+		{
+			target.push_back(i);
+		}
+	}
+
+	for (size_t i=0;i<deck.size();i++)
+	{
+		for (auto& target_x : target)
+		{
+			if (deck[i] == target_x)
+			{
+				hands.push_back(deck[i]);
+				deck.erase(deck.begin() + i);
+
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 void Board::playCard(vector<int> &cards, int idx)

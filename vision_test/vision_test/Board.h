@@ -56,9 +56,12 @@ public:
 	void addEnemy(Board *newEnemy);						//対戦相手の盤面を規定する
 	void sendNode(vector<int> &cards, int idx = 0);		//ノードにカードを移動させる
 	void discard(vector<int> &cards, int idx);			//カードを破棄する
+	bool sarch(int id);									//デッキからカードを手札に加える
 	
 	
-	bool inHand(vector<int> targets);					//手札にtarget内のカードが存在するか調べる
-	bool inDeck(vector<int> targets);					//デッキにtarget内のカードが存在するか調べる
+	bool inHand(vector<int> deck_idx);					//手札に初期化されたデッキのN番目のカードが存在するか調べる
+	bool inHand(int id);
+	bool inDeck(vector<int> deck_idx);					//デッキに初期化されたデッキのN番目のカードが存在するか調べる
+	bool inDeck(int id);
 	bool isHell();
 };

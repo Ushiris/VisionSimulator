@@ -18,25 +18,20 @@ void Init()
 	Card::InitDataBase();
 }
 
-void makeDeckList(vector<int> &list)
+vector<int> makeDeckList()
 {
+	vector<int> deckList;
 	for (int i = 0;i < 3;++i)
 	{
-		list.push_back(720);
-		list.push_back(12030);
+		deckList.push_back(720);
+		deckList.push_back(12030);
 	}
+	return deckList;
 }
 
 bool TestPlay(Board &player)
 {
-	return false;
-}
-
-int main(void)
-{
-	Init();
-	Board player;
-	vector<vector<int>> targets(4, vector<int>(3,999));
+	vector<vector<int>> targets(4, vector<int>(3, 999));
 	targets[0][0] = 0;
 	targets[0][1] = 1;
 	targets[0][2] = 2;
@@ -44,9 +39,22 @@ int main(void)
 	targets[2][0] = 4;
 	targets[3][0] = 5;
 
-	vector<int> deckList;
-	makeDeckList(deckList);
-	player.setDeckList(deckList);
+	player.draw(7);
+
+	bool result = false;
+
+	result = player.inHand(targets[0]);
+
+
+	return result;
+}
+
+int main(void)
+{
+	Init();
+
+	vector<int> deckList = makeDeckList();
+	Board player(deckList);
 
 	unsigned int test_time = 0;
 	unsigned int success = 0;
@@ -58,11 +66,7 @@ int main(void)
 	{
 		for (int i = 0;i < 1000;++i)
 		{
-			player.draw(7);
-			if (player.inHand(targets[0]))
-			{
-				success++;
-			}
+			if (TestPlay(player)) success++;
 
 			player.resetDeck();
 			test_time++;
@@ -70,7 +74,7 @@ int main(void)
 
 		long double result = (long double)success / test_time * 100;
 		system("cls");
-		cout << setprecision(5) << result << '%' << "\ntime:" << test_time << endl;
+		cout << setprecision(5) << result <<"%\ntime:" << test_time << endl;
 
 		if (_kbhit())
 		{

@@ -3,8 +3,11 @@
 
 using namespace std;
 
+#define EFFECT(x) effects[ID2INDEX(x)] = [](void* board)
+
 Card::Card()
 {
+	
 }
 
 Card::Card(int newId)
@@ -32,9 +35,14 @@ void Card::InitDataBase()
 	}
 
 	//‚±‚±‚ÉŒø‰Êˆ—‚ğ‘‚«‚Ü‚·B’n–‚©H
-	effects[ID2INDEX(720)] = [](void* board) {
+	EFFECT(720) {
 		Board *you = (Board*)board;
 		you->sendNode(you->getCast(), you->getCast().size()-1);
+		return true;
+	};
+	EFFECT(12030) {
+		Board* you = (Board*)board;
+		
 		return true;
 	};
 }
@@ -91,7 +99,7 @@ int Card::getGraze()
 
 Range Card::getRenge()
 {
-	return renge;
+	return range;
 }
 
 Period Card::getPeriod()

@@ -31,8 +31,7 @@ void shuffle(std::vector<T>& list)
 	std::mt19937 mt(rnd());			// メルセンヌ・ツイスタの32ビット版、引数は初期シード
 	std::uniform_int_distribution<> rand_make(0, list.size() - 1);
 
-	unsigned int length = list.size();
-	for (unsigned int i = 0; i < length; ++i) {
+	for (size_t i = 0; i < list.size(); ++i) {
 		unsigned int j = rand_make(mt);
 		std::swap(list[i], list[j]);
 	}
