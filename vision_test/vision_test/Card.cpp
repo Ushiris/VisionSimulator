@@ -44,7 +44,7 @@ int Card::getId()
 	return id;
 }
 
-CardType & Card::getType()
+CardType Card::getType()
 {
 	return type;
 }

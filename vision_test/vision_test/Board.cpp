@@ -82,9 +82,19 @@ bool Board::checkPlayable(void *playCard)
 {
 	Card *card = (Card*)playCard;
 
-	if(node.size())
+	if (node.size() < card->getNode())
+	{
+		return false;
+	}
 
 	return true;
+}
+
+bool Board::checkPlayable(int hand_idx)
+{
+	Card* card = (Card*)(_cardData[hands[hand_idx]]);
+
+	return card->getNode() > node.size();
 }
 
 void Board::setDeckList(vector<int> list)
@@ -176,11 +186,17 @@ void Board::playCard(vector<int> &cards, int idx)
 	cast.push_back(cards[idx]);
 	cards.erase(cards.begin() + idx);
 
-	
+	Card* card = (Card*)getCardData(cards[idx]);
+
+	card->play(this);
 }
 
 void Board::playReqest(vector<int> &cards, int idx)
 {
+	if (checkPlayable(getCardData(cards[idx])))
+	{
+		playCard(cards, idx);
+	}
 }
 
 void Board::addEnemy(Board * newEnemy)
