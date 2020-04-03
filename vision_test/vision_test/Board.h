@@ -21,8 +21,10 @@ private:
 	vector<int> nether;
 	vector<int> cast;
 	vector<int> field;
+	vector<int> temp = vector<int>();
+	vector<int> dummy = vector<int>();
 
-	bool _isHell;
+	bool _isHell = false;
 
 public:
 	Board();
@@ -52,16 +54,16 @@ public:
 	void addDeck(vector<int> &add);						//add内のカード全てをデッキに送る
 	void resetDeck();									//全てのカードをデッキに戻してシャッフルする
 	void playCard(vector<int> &cards, int idx);			//プレイ条件を無視してカードのプレイを行う
-	void playReqest(vector<int> &cards, int idx);		//正式にカードのプレイを宣言する
+	void playRequest(vector<int> &cards, int idx);		//正式にカードのプレイをしようとします
+	void playRequest(int id);							//手札の[ID]をプレイしようとします
 	void addEnemy(Board *newEnemy);						//対戦相手の盤面を規定する
 	void sendNode(vector<int> &cards, int idx = 0);		//ノードにカードを移動させる
 	void discard(vector<int> &cards, int idx);			//カードを破棄する
 	bool sarch(int id);									//デッキからカードを手札に加える
 	
-	
-	bool inHand(vector<int> deck_idx);					//手札に初期化されたデッキのN番目のカードが存在するか調べる
+	bool inHand(vector<int> deck_idx);					//手札にデッキリストのN番目のカードが存在するか調べる
 	bool inHand(int id);
-	bool inDeck(vector<int> deck_idx);					//デッキに初期化されたデッキのN番目のカードが存在するか調べる
+	bool inDeck(vector<int> deck_idx);					//デッキにデッキリストのN番目のカードが存在するか調べる
 	bool inDeck(int id);
 	bool isHell();
 };

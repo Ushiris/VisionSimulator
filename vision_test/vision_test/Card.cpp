@@ -4,11 +4,6 @@
 
 using namespace std;
 
-#define EFFECT(x) effects[ID2INDEX(x)] = [](void* board)
-#define MAKE_BOARD Board *you = ((Board*)board)
-#define CARD_SELF you->getCast(), you->getCast().size() - 1
-#define DISCARD_SELF you->discard(CARD_SELF)
-
 Card::Card()
 {
 	

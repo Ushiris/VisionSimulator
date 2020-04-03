@@ -8,6 +8,8 @@ using namespace std;
 #define MAKE_BOARD Board *you = ((Board*)board)
 #define CARD_SELF you->getCast(), you->getCast().size() - 1
 #define DISCARD_SELF you->discard(CARD_SELF)
+#define SHUFFLE shuffle(you->getDeck())
+#define MANA_CHARGE(x) for(int i=0;i<(x);i++)you->sendNode(you->getDeck(), 0)
 
 //ここでカードのデータを全て初期化します
 void Card::InitDataBase()
@@ -41,11 +43,11 @@ void Card::InitDataBase()
 
 	EFFECT(12030) {
 		MAKE_BOARD;
-		if (you->sarch(12030) == false) return false;
-		shuffle(you->getDeck());
-		you->sendNode(you->getDeck(), 0);
-		DISCARD_SELF;
+		you->sarch(12030);
+		SHUFFLE;
+		MANA_CHARGE(1);
 
+		DISCARD_SELF;
 		return true;
 	};
 

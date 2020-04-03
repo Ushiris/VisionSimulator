@@ -41,8 +41,8 @@ bool TestPlay(Board &player)
 
 	player.draw(7);
 
-	//
-	if (player.inHand(targets[1]))
+	//‰à–Ô2–‡ƒpƒ^[ƒ“
+	if (player.inHand(12030))
 	{
 		if (player.inHand(targets[2]) || player.inHand(targets[3]))
 		{
@@ -52,6 +52,12 @@ bool TestPlay(Board &player)
 	if (player.inHand(targets[2]) || player.inHand(targets[3]))
 	{
 		return true;
+	}
+
+	//turn 1
+	if (player.inHand(targets[0]))
+	{
+		player.playRequest()
 	}
 
 	bool result = false;

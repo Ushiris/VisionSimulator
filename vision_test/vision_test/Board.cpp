@@ -88,6 +88,7 @@ vector<int>& Board::getNode()
 
 vector<int>& Board::getNether()
 {
+	if (isHell()) return dummy;
 	return nether;
 }
 
@@ -266,12 +267,17 @@ void Board::playCard(vector<int> &cards, int idx)
 	card->play(this);
 }
 
-void Board::playReqest(vector<int> &cards, int idx)
+void Board::playRequest(vector<int> &cards, int idx)
 {
 	if (checkPlayable(getCardData(cards[idx])))
 	{
 		playCard(cards, idx);
 	}
+}
+
+void Board::playRequest(int id)
+{
+
 }
 
 void Board::addEnemy(Board * newEnemy)
