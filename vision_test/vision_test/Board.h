@@ -11,10 +11,10 @@ private:
 	static const int SIDE_LIMIT = 10;
 
 	Board *enemy;
-	vector<void*> _cardData;
+	vector<void*> _cardData;			//collection 
 
-	vector<int> deck;
-	vector<int> deckList;
+	vector<int> deck;					//collection index. 0 is top of deck
+	vector<int> deckList;				//collection ID.
 	vector<int> side;
 	vector<int> hands;
 	vector<int> node;

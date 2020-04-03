@@ -41,6 +41,7 @@ bool TestPlay(Board &player)
 
 	player.draw(7);
 
+	//
 	if (player.inHand(targets[1]))
 	{
 		if (player.inHand(targets[2]) || player.inHand(targets[3]))

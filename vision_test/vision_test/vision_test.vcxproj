@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Card.cpp" />
+    <ClCompile Include="InitCardEffectData.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UshirisUtl.cpp" />
   </ItemGroup>

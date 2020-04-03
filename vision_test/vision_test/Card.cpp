@@ -5,6 +5,9 @@
 using namespace std;
 
 #define EFFECT(x) effects[ID2INDEX(x)] = [](void* board)
+#define MAKE_BOARD Board *you = ((Board*)board)
+#define CARD_SELF you->getCast(), you->getCast().size() - 1
+#define DISCARD_SELF you->discard(CARD_SELF)
 
 Card::Card()
 {
@@ -22,41 +25,7 @@ Card::~Card()
 {
 }
 
-//ここでカードのデータを全て初期化します
-void Card::InitDataBase()
-{
-	//とりあえず全部空撃ちできるようにします。
-	for (int i = 0;i < NORMAL_NUMBER_CARD + PR_NUMBER_CARD;++i)
-	{
-		effects[i] = [](void* board) {
-			Board *x = ((Board*)board);
-			x->discard(x->getCast(), x->getCast().size() - 1);
-			return true;
-		};
-	}
 
-	//ここに効果処理を書きます。地獄か？
-#pragma region CARD_EFFECT_DEFINE_AREA
-
-	EFFECT(720) {
-		Board *you = (Board*)board;
-		you->sendNode(you->getCast(), you->getCast().size()-1);
-
-		return true;
-	};
-
-	EFFECT(12030) {
-		Board* you = (Board*)board;
-		you->sarch(12030);
-		shuffle(you->getDeck());
-		you->sendNode(you->getDeck(), 0);
-		you->discard(you->getCast(), you->getCast().size() - 1);
-
-		return true;
-	};
-
-#pragma endregion
-}
 
 int Card::getId()
 {
