@@ -31,41 +31,19 @@ vector<int> makeDeckList()
 
 bool TestPlay(Board &player)
 {
-	vector<vector<int>> targets(4, vector<int>(3, 999));
-	targets[0][0] = 0;
-	targets[0][1] = 1;
-	targets[0][2] = 2;
-	targets[1][0] = 3;
-	targets[2][0] = 4;
-	targets[3][0] = 5;
-
+	//最初のドロー
 	player.draw(7);
 
 	//霞網2枚パターン
-	if (player.inHand(12030))
-	{
-		if (player.inHand(targets[2]) || player.inHand(targets[3]))
-		{
-			return true;
-		}
-	}
-	if (player.inHand(targets[2]) || player.inHand(targets[3]))
-	{
-		return true;
-	}
+	if (player.inOnePairOver(12030))return true;
 
 	//turn 1
-	if (player.inHand(targets[0]))
-	{
-		player.playRequest()
-	}
+	player.playRequest(720);
 
-	bool result = false;
+	//turn 2
+	player.draw(1);
 
-	result = player.inHand(targets[0]);
-
-
-	return result;
+	return false;
 }
 
 int main(void)

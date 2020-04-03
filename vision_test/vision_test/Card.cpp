@@ -13,6 +13,10 @@ Card::Card(int newId)
 {
 	id = newId;
 	effect = getPlayEffect(id);
+	if (id = 12030)
+	{
+		node = 3;
+	}
 }
 
 

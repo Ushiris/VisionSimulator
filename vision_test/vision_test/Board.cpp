@@ -102,9 +102,9 @@ vector<int>& Board::getField()
 	return field;
 }
 
-void * Board::getCardData(int idx)
+void * Board::getCardData(int deck_list_id)
 {
-	return _cardData[idx];
+	return _cardData[deck_list_id];
 }
 
 bool Board::checkPlayable(void *playCard)
@@ -168,6 +168,28 @@ bool Board::inHand(int id)
 	return false;
 }
 
+bool Board::inOnePairOver(int id)
+{
+	if (hands.size() < 2)return false;
+	bool isFind = false;
+	for (size_t i = 0; i < hands.size(); i++)
+	{
+		if (deckList[hands[i]] == id)
+		{
+			if (!isFind)
+			{
+				isFind = true;
+			}
+			else
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 bool Board::inDeck(vector<int> deck_idx)
 {
 	for (auto &card : deck)
@@ -196,13 +218,13 @@ bool Board::isHell()
 	return _isHell;
 }
 
-void Board::addDeck(vector<int> &add)
+void Board::addDeck(vector<int> & add_list_idx)
 {
-	for (auto card : add)
+	for (auto card : add_list_idx)
 	{
 		deck.push_back(card);
 	}
-	add.clear();
+	add_list_idx.clear();
 }
 
 void Board::resetDeck()
@@ -277,7 +299,24 @@ void Board::playRequest(vector<int> &cards, int idx)
 
 void Board::playRequest(int id)
 {
+	int hand_idx = -1;
+	for (size_t i=0;i<hands.size();i++)
+	{
+		if (deckList[i] == id)
+		{
+			hand_idx = i;
+			break;
+		}
+	}
+	if (hand_idx == -1)
+	{
+		return;
+	}
 
+	if (checkPlayable(getCardData(hands[hand_idx])))
+	{
+		playCard(hands, hand_idx);
+	}
 }
 
 void Board::addEnemy(Board * newEnemy)
