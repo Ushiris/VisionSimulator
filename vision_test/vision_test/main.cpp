@@ -39,8 +39,11 @@ bool TestPlay(Board &player)
 
 	//turn 1
 	player.playRequest(720);
+	player.nodeSet({ 720,12030 });
 
 	//turn 2
+	player.playRequest(720);
+	player.playRequest(12030);
 	player.draw(1);
 
 	return false;

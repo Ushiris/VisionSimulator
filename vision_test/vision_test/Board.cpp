@@ -102,6 +102,11 @@ vector<int>& Board::getField()
 	return field;
 }
 
+vector<int>& Board::getPlayLimitCard()
+{
+	return playLimitCard;
+}
+
 void * Board::getCardData(int deck_list_id)
 {
 	return _cardData[deck_list_id];
@@ -111,10 +116,7 @@ bool Board::checkPlayable(void *playCard)
 {
 	Card *card = (Card*)playCard;
 
-	if (node.size() < card->getNode())
-	{
-		return false;
-	}
+	if (node.size() < card->getNode())return false;
 
 	return true;
 }
@@ -278,7 +280,35 @@ bool Board::sarch(int id)
 	return false;
 }
 
-void Board::playCard(vector<int> &cards, int idx)
+void Board::nodeSet(int hand_idx)
+{
+	if (hand_idx >= hands.size())return;
+	sendNode(hands, hand_idx);
+	_isSetNode = true;
+}
+
+void Board::nodeSet(vector<int> ignore_id)
+{
+	for (size_t i = 0; i < hands.size(); i++)
+	{
+		bool isIgnore = false;
+		for (auto id : ignore_id)
+		{
+			isIgnore = (id == deckList[hands[i]]);
+		}
+		if (isIgnore)continue;
+
+		nodeSet(i);
+		return;
+	}
+}
+
+void Board::addLimit(int id)
+{
+	playLimitCard.push_back(id);
+}
+
+bool Board::playCard(vector<int> &cards, int idx)
 {
 	//move to cast area.
 	cast.push_back(cards[idx]);
@@ -289,34 +319,28 @@ void Board::playCard(vector<int> &cards, int idx)
 	card->play(this);
 }
 
-void Board::playRequest(vector<int> &cards, int idx)
+bool Board::playRequest(vector<int> &cards, int idx)
 {
-	if (checkPlayable(getCardData(cards[idx])))
-	{
-		playCard(cards, idx);
-	}
+	if (!checkPlayable(getCardData(cards[idx])))return false;
+	return playCard(cards, idx);
 }
 
-void Board::playRequest(int id)
+bool Board::playRequest(int id)
 {
 	int hand_idx = -1;
 	for (size_t i=0;i<hands.size();i++)
 	{
-		if (deckList[i] == id)
+		if (deckList[hands[i]] == id)
 		{
 			hand_idx = i;
 			break;
 		}
 	}
-	if (hand_idx == -1)
-	{
-		return;
-	}
+	if (hand_idx == -1)return false;
 
-	if (checkPlayable(getCardData(hands[hand_idx])))
-	{
-		playCard(hands, hand_idx);
-	}
+	if (!checkPlayable(getCardData(hands[hand_idx])))return false;
+
+	return playCard(hands, hand_idx);
 }
 
 void Board::addEnemy(Board * newEnemy)
